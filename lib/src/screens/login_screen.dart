@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_statefull/src/mixins/helper.dart';
 
 import '../blocs/form_bloc.dart';
 import '../providers/provider.dart';
@@ -14,21 +15,39 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(top: 230.0, left: 50.0, right: 50.0),
+          margin: EdgeInsets.only(top: 100.0, left: 50.0, right: 50.0),
           height: 550.0,
           child: Form(
             child: Column(
               children: <Widget>[
                 _emailField(formBloc),
                 _passwordField(formBloc),
+                Container(
+                  width: 300,
+                  height: 35,
+                  child: Helper().errorMessage(formBloc),
+                ),
                 _checkBox(),
                 _buttonField(formBloc),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/forgot_password'),
-                  child: Container(
-                    child: Text('Forgot password?'),
-                    alignment: Alignment.bottomLeft,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/forgot_password'),
+                      child: Container(
+                        child: Text('Forgot password?'),
+                        alignment: Alignment.bottomLeft,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, '/signup'),
+                      child: Container(
+                        child: Text('Register'),
+                        alignment: Alignment.bottomLeft,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -90,7 +109,13 @@ class LoginScreen extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(20.0),
             child: RaisedButton(
-              onPressed: snapshot.hasError ? null : bloc.submit,
+              onPressed: () {
+                if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return null;
+                }
+                bloc.login(context);
+              },
               child: const Icon(Icons.arrow_forward),
               color: Colors.amber,
               clipBehavior: Clip.hardEdge,

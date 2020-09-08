@@ -4,14 +4,17 @@ class ValidationMixin {
   // with Provider state
   final validatorEmail = new StreamTransformer<String, String>.fromHandlers(
     handleData: (email, sink) {
-      if (email.isEmpty) {
-        sink.addError('Email is required');
-      } else if (email.length < 8) {
-        sink.addError('Email is too short!');
-      } else if (!email.contains('@')) {
-        sink.addError('Please enter a valid email');
-      } else if (email.contains(' ')) {
-        sink.addError('Space not allowd! 😏');
+      // if (email.isEmpty) {
+      //   sink.addError('Email is required');
+      // } else if (!email.contains('@')) {
+      //   sink.addError('Please enter a valid email');
+      // } else if (email.contains(' ')) {
+      //   sink.addError('Space not allowd! 😏');
+      // } else {
+      //   sink.add(email);
+      // }
+      if (ValidationMixin()._validateEmail(email)) {
+        sink.addError('Emmail is not valid');
       } else {
         sink.add(email);
       }
@@ -20,37 +23,37 @@ class ValidationMixin {
 
   final validatorPassword = new StreamTransformer<String, String>.fromHandlers(
     handleData: (password, sink) {
-      if (password.length > 8) {
-        sink.add(password);
+      if (!ValidationMixin()._validatePassword(password)) {
+        sink.addError('Password is not valid!');
       } else {
-        sink.addError('Passwords must be at least 8 characters!');
+        sink.add(password);
       }
     },
   );
   // without Provider state
-  String validateEmail(String email) {
+  bool _validateEmail(String email) {
     var regExp = new RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (email.isEmpty) {
-      return 'Email is required';
-    }
+    // if (email.isEmpty) {
+    //   return false;
+    // }
     if (regExp.hasMatch(email)) {
-      return 'Please enter a valid email';
+      return false;
     }
-    return null;
+    return true;
   }
 
-  String validatePassword(String password) {
-    var regExp = new RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
-    if (password.isEmpty) {
-      return 'Password is required';
-    }
-    if (password.length < 8) {
-      return 'Password should more than 8 characters';
-    }
+  bool _validatePassword(String password) {
+    var regExp = new RegExp(r'^(?=.*?[A-Z][a-z]).{8,}$');
+    // if (password.isEmpty) {
+    //   return false;
+    // }
+    // if (password.length < 8) {
+    //   return false;
+    // }
     if (regExp.hasMatch(password)) {
-      return 'Please enter a valid password!';
+      return false;
     }
-    return null;
+    return true;
   }
 }

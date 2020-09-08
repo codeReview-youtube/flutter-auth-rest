@@ -1,4 +1,4 @@
-# login_statefull
+# Authorization with Flutter apps using REST api's
 
 A new Flutter project.
 

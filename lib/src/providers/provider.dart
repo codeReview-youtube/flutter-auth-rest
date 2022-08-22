@@ -14,6 +14,6 @@ class Provider extends InheritedWidget {
   }
 
   static FormBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(Provider) as Provider).bloc;
+    return (context.dependOnInheritedWidgetOfExactType<Provider>()).bloc;
   }
 }

@@ -52,7 +52,7 @@ class AuthService {
 
 class _AuthData {
   String token, refreshToken, clientId;
-  _AuthData(this.token, this.refreshToken, {this.clientId});
+  _AuthData(this.token, this.refreshToken);
 
   // toJson
   // required by Session lib

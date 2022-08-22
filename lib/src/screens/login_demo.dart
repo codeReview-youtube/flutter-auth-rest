@@ -40,32 +40,50 @@ class _LoginScreen extends State<LoginScreen> with ValidationMixin {
   Widget emailField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      validator: validateEmail,
+      validator: (value) {
+        var regExp = new RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+        );
+
+        if (regExp.hasMatch(email)) {
+          return null;
+        }
+        return "Email is not valid";
+      },
       onSaved: (value) {
         setState(() {
           email = value;
         });
       },
       decoration: const InputDecoration(
-          icon: Icon(Icons.email),
-          hintText: 'someone@company.com',
-          labelText: 'Email'),
+        icon: Icon(Icons.email),
+        hintText: 'someone@company.com',
+        labelText: 'Email',
+      ),
     );
   }
 
   Widget passwordField() {
     return TextFormField(
       obscureText: true,
-      validator: validatePassword,
+      validator: (value) {
+        var regExp = new RegExp(r'^(?=.*?[A-Z][a-z]).{8,}$');
+
+        if (regExp.hasMatch(password)) {
+          return null;
+        }
+        return "Password is not valid!";
+      },
       onSaved: (value) {
         setState(() {
           password = value;
         });
       },
       decoration: const InputDecoration(
-          icon: Icon(Icons.visibility_off),
-          hintText: 'Enter password',
-          labelText: 'Password'),
+        icon: Icon(Icons.visibility_off),
+        hintText: 'Enter password',
+        labelText: 'Password',
+      ),
     );
   }
 

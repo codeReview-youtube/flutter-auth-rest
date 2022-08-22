@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               Text('Home Screen'),
-              RaisedButton(
+              ElevatedButton(
                 child: Text('Log out'),
                 onPressed: () {
                   Navigator.popAndPushNamed(context, '/login');

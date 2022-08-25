@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ForgotPassword extends StatelessWidget {
 // render
@@ -7,9 +8,8 @@ class ForgotPassword extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        brightness: Brightness.light,
         iconTheme: IconThemeData(color: Colors.black),
-        elevation: 0,
+        elevation: 0, systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: Center(
         child: Container(

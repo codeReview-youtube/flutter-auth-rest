@@ -30,14 +30,15 @@ class FormBloc with ValidationMixin {
   Stream<String> get errorMessage => _errorMessage.stream;
 
   Stream<bool> get submitValidForm => Rx.combineLatest3(
-        email,
-        password,
-        errorMessage,
-        (e, p, er) => true,
-      );
+    email,
+    password,
+    errorMessage,
+    (e, p, er) => true,
+  );
 
-  var authInfo;
-  // rgister
+  AuthService authInfo;
+  
+  // register
   dynamic register(BuildContext context) async {
     authInfo = AuthService();
 

@@ -46,35 +46,37 @@ class SignupScreen extends StatelessWidget {
 
   Widget _emailField(FormBloc bloc) {
     return StreamBuilder<String>(
-        stream: bloc.email,
-        builder: (context, snapshot) {
-          return TextField(
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              hintText: 'you@example.com',
-              labelText: 'Email',
-              errorText: snapshot.error,
-            ),
-            onChanged: bloc.changeEmail,
-          );
-        });
+      stream: bloc.email,
+      builder: (context, snapshot) {
+        return TextField(
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            hintText: 'you@example.com',
+            labelText: 'Email',
+            errorText: snapshot.error,
+          ),
+          onChanged: bloc.changeEmail,
+        );
+      },
+    );
   }
 
   Widget _passwordField(FormBloc bloc) {
     return StreamBuilder<String>(
-        stream: bloc.password,
-        builder: (context, snapshot) {
-          return TextField(
-            obscureText: true,
-            onChanged: bloc.changePassword,
-            maxLength: 20,
-            decoration: InputDecoration(
-              hintText: '',
-              labelText: 'Password',
-              errorText: snapshot.error,
-            ),
-          );
-        });
+      stream: bloc.password,
+      builder: (context, snapshot) {
+        return TextField(
+          obscureText: true,
+          onChanged: bloc.changePassword,
+          maxLength: 20,
+          decoration: InputDecoration(
+            hintText: '',
+            labelText: 'Password',
+            errorText: snapshot.error,
+          ),
+        );
+      },
+    );
   }
 
   Widget _checkBox() {
@@ -91,26 +93,26 @@ class SignupScreen extends StatelessWidget {
 
   Widget _buttonField(FormBloc bloc) {
     return StreamBuilder<bool>(
-        stream: bloc.submitValidForm,
-        builder: (context, snapshot) {
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: RaisedButton(
-              onPressed: () {
-                if (snapshot.hasError) {
-                  return null;
-                }
-                return bloc.register(context);
-              },
-              child: const Icon(Icons.arrow_forward),
-              color: Colors.amber,
-              clipBehavior: Clip.hardEdge,
+      stream: bloc.submitValidForm,
+      builder: (context, snapshot) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ElevatedButton(
+            onPressed: () {
+              if (snapshot.hasError) {
+                return null;
+              }
+              return bloc.register(context);
+            },
+            child: const Icon(Icons.arrow_forward),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.amber,
               elevation: 10,
-              disabledColor: Colors.blueGrey,
-              disabledElevation: 10,
-              disabledTextColor: Colors.white,
             ),
-          );
-        });
+            clipBehavior: Clip.hardEdge,
+          ),
+        );
+      },
+    );
   }
 }
